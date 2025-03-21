@@ -91,6 +91,11 @@ Contributions are welcome! Here's how you can help:
 
 This project is licensed under the MIT License.
 
+## Follow me
+- X: [@tamnvvn](https://x.com/tamnvvn)
+- Ko-fi: [https://ko-fi.com/tamnguyenvan](https://ko-fi.com/tamnv)
+- Email: [tamnvhustcc@gmail.com](mailto:tamnvhustcc@gmail.com)
+
 ---
 
 <p align="center">Made with ❤️ to simplify your Colab experience</p>
