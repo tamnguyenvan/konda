@@ -1,9 +1,8 @@
 # 🐍 Konda - Conda Installer/Wrapper for Google Colab 🚀
 
-![Konda Banner](https://raw.githubusercontent.com/yourusername/konda/main/assets/konda-banner.gif)
-
 [![PyPI version](https://badge.fury.io/py/konda.svg)](https://badge.fury.io/py/konda)
 [![Python Versions](https://img.shields.io/pypi/pyversions/konda.svg)](https://pypi.org/project/konda/)
+[![CI](https://github.com/tamnguyenvan/konda/actions/workflows/publish.yml/badge.svg)](https://github.com/tamnguyenvan/konda/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 🔍 Why Konda?
@@ -36,7 +35,7 @@ konda.install()
 ```
 
 ### 2️⃣ Use conda commands with konda
-Konda is a simple wrapper around conda. Just replace `conda` with `konda` in any conda command.
+Konda is a simple wrapper around conda.
 ```bash
 # Create a new environment
 konda create -n my_env python=3.8 -y
