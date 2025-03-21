@@ -14,7 +14,7 @@ setup(
     description="A wrapper for conda commands with automatic Miniconda installation",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/tamvannguyen/konda",
+    url="https://github.com/tamnguyenvan/konda",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

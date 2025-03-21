@@ -53,7 +53,7 @@ konda deactivate
 ```
 
 ### Example
-To see how konda works in action, check out the [example](https://github.com/tamvannguyen/konda/blob/main/assets/example.ipynb).
+To see how konda works in action, check out the [example](https://github.com/tamnguyenvan/konda/blob/main/assets/example.ipynb).
 
 ## 🗑️ Uninstallation
 
