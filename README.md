@@ -46,6 +46,11 @@ konda activate my_env
 # Run a command in the environment
 konda run "conda install anaconda::tensorflow-gpu=2.4.1 -y"
 konda run "pip install requests"
+konda run "conda install nvidia/label/cuda-12.4.0::cuda-toolkit"
+konda run "pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124"
+
+# Run a script
+konda run "python my_script.py"
 
 # Deactivate the environment
 konda deactivate
