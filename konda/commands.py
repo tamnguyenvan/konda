@@ -4,28 +4,28 @@ import shutil
 import subprocess
 import platform
 
-def get_conda_path():
+def get_mamba_path():
     """
-    Get the path to the conda executable.
+    Get the path to the mamba executable.
     """
-    # Check for installed conda by konda
-    from .install import get_install_path, is_conda_installed
+    # Check for installed mamba by konda
+    from .install import get_install_path, is_mamba_installed
     
     install_path = get_install_path()
     
-    if is_conda_installed(install_path):
+    if is_mamba_installed(install_path):
         system = platform.system().lower()
         if system == "windows":
-            return os.path.join(install_path, "Scripts", "conda.exe")
+            return os.path.join(install_path, "Scripts", "mamba.exe")
         else:
-            return os.path.join(install_path, "bin", "conda")
+            return os.path.join(install_path, "bin", "mamba")
     
-    # Check for system-installed conda
-    conda_path = shutil.which("conda")
-    if conda_path:
-        return conda_path
+    # Check for system-installed mamba
+    mamba_path = shutil.which("mamba")
+    if mamba_path:
+        return mamba_path
     
-    raise FileNotFoundError("Conda not found. Please run konda.install() first.")
+    raise FileNotFoundError("Mamba not found. Please run konda.install() first.")
 
 def get_state_file_path():
     """
@@ -64,17 +64,17 @@ def get_active_env():
             return "base"
     return "base"
 
-def run_conda_command(args):
+def run_mamba_command(args):
     """
-    Run a conda command with the appropriate prefix if needed.
+    Run a mamba command with the appropriate prefix if needed.
     
     Args:
-        args: List of command arguments to pass to conda
+        args: List of command arguments to pass to mamba
     """
     from .install import get_install_path
     
     install_path = get_install_path()
-    conda_path = os.path.join(install_path, "bin", "conda")
+    mamba_path = os.path.join(install_path, "bin", "mamba")
     
     # Handle special commands
     if args and args[0] == "activate":
@@ -82,12 +82,13 @@ def run_conda_command(args):
             env_name = args[1]
             save_active_env(env_name)
             
-        # For Google Colab, we need to source conda.sh first
+        # For Google Colab, we need to source conda.sh and mamba.sh first
         conda_sh = os.path.join(install_path, "etc", "profile.d", "conda.sh")
-        print(f"Activating conda environment: {env_name}")
+        mamba_sh = os.path.join(install_path, "etc", "profile.d", "mamba.sh")
+        print(f"Activating environment: {env_name}")
         
         # Use ". " instead of "source " for better shell compatibility
-        cmd = f". {conda_sh} && conda activate {env_name}"
+        cmd = f". {conda_sh} && . {mamba_sh} && mamba activate {env_name}"
         
         # Ensure we use bash for this command
         return subprocess.run(cmd, shell=True, executable="/bin/bash")
@@ -95,12 +96,13 @@ def run_conda_command(args):
         env_name = "base"
         save_active_env(env_name)
             
-        # For Google Colab, we need to source conda.sh first
+        # For Google Colab, we need to source conda.sh and mamba.sh first
         conda_sh = os.path.join(install_path, "etc", "profile.d", "conda.sh")
-        print(f"Deactivating conda environment")
+        mamba_sh = os.path.join(install_path, "etc", "profile.d", "mamba.sh")
+        print(f"Deactivating environment")
         
         # Use ". " instead of "source " for better shell compatibility
-        cmd = f". {conda_sh} && conda deactivate"
+        cmd = f". {conda_sh} && . {mamba_sh} && mamba deactivate"
         
         # Ensure we use bash for this command
         return subprocess.run(cmd, shell=True, executable="/bin/bash")
@@ -112,28 +114,29 @@ def run_conda_command(args):
         env_name = get_active_env()
         cmd_to_run = args[1]
         
-        # For Google Colab, we need to source conda.sh first
+        # For Google Colab, we need to source conda.sh and mamba.sh first
         conda_sh = os.path.join(install_path, "etc", "profile.d", "conda.sh")
+        mamba_sh = os.path.join(install_path, "etc", "profile.d", "mamba.sh")
         
         # Build the command
-        cmd = f". {conda_sh} && conda activate {env_name} && {cmd_to_run}"
+        cmd = f". {conda_sh} && . {mamba_sh} && mamba activate {env_name} && {cmd_to_run}"
         
         # Ensure we use bash for this command
         return subprocess.run(cmd, shell=True, executable="/bin/bash")
     else:
-        # Normal conda commands
-        return subprocess.run([conda_path] + args)
+        # Normal mamba commands
+        return subprocess.run([mamba_path] + args)
 
 def print_help():
     """
     Print the help information for konda.
     """
-    print("konda - A wrapper for conda commands with automatic Miniconda installation")
+    print("konda - A wrapper for mamba commands with automatic Miniforge installation")
     print("\nUsage:")
-    print("  konda <conda_command> [args...]  - Run a conda command")
+    print("  konda <mamba_command> [args...]  - Run a mamba command")
     print("  konda activate <env>            - Set the active environment")
     print("  konda run \"<command>\"           - Run a command in the active environment")
-    print("  konda uninstall                 - Uninstall Miniconda installed by konda")
+    print("  konda uninstall                 - Uninstall Miniforge installed by konda")
     print("  konda --help                    - Show this help message")
     print("\nExamples:")
     print("  konda create -n my_env python=3.11 -y")

@@ -6,54 +6,60 @@ from pathlib import Path
 
 def get_install_path():
     """
-    Return the default installation path for Miniconda.
+    Return the default installation path for Miniforge.
     """
-    return "/usr/local"
+    return os.path.expanduser("~/conda")
 
-def is_conda_installed(install_path=None):
+def is_mamba_installed(install_path=None):
     """
-    Check if conda is already installed at the specified path.
+    Check if mamba is already installed at the specified path.
     
     Args:
-        install_path: Path to check for conda installation. If None, uses default path.
+        install_path: Path to check for mamba installation. If None, uses default path.
     
     Returns:
-        bool: True if conda is installed, False otherwise.
+        bool: True if mamba is installed, False otherwise.
     """
     if install_path is None:
         install_path = get_install_path()
     
-    conda_path = os.path.join(install_path, "bin", "conda")
-    return os.path.exists(conda_path)
+    mamba_path = os.path.join(install_path, "bin", "mamba")
+    return os.path.exists(mamba_path)
 
 def install():
     """
-    Download and install Miniconda on Google Colab.
+    Download and install Miniforge on Google Colab.
     """
-    miniconda_script = "Miniconda3-latest-Linux-x86_64.sh"
     install_path = get_install_path()
     
-    # Download Miniconda installation script
-    print(f"Downloading Miniconda installer...")
-    subprocess.run(["wget", "-q", f"https://repo.anaconda.com/miniconda/{miniconda_script}", "-O", "miniconda.sh"], check=True)
+    # Download Miniforge installation script
+    print(f"Downloading Miniforge installer...")
+    subprocess.run(["wget", "-O", "Miniforge3.sh", f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"], shell=True, check=True)
     
-    # Make the script executable
-    subprocess.run(["chmod", "+x", "miniconda.sh"], check=True)
-    
-    # Install Miniconda
-    print(f"Installing Miniconda to {install_path}...")
-    subprocess.run(["bash", "./miniconda.sh", "-b", "-f", "-p", install_path], check=True)
+    # Install Miniforge
+    print(f"Installing Miniforge to {install_path}...")
+    subprocess.run(["bash", "Miniforge3.sh", "-b", "-p", install_path], check=True)
     
     # Update environment variables
-    conda_bin = os.path.join(install_path, "bin")
-    os.environ["PATH"] = f"{conda_bin}:{os.environ['PATH']}"
-    os.environ["CONDA"] = f"{conda_bin}/conda"
+    mamba_bin = os.path.join(install_path, "bin")
+    os.environ["PATH"] = f"{mamba_bin}:{os.environ['PATH']}"
+    os.environ["MAMBA"] = f"{mamba_bin}/mamba"
+    
+    # Source conda and mamba profile scripts
+    conda_sh = os.path.join(install_path, "etc", "profile.d", "conda.sh")
+    mamba_sh = os.path.join(install_path, "etc", "profile.d", "mamba.sh")
+    
+    print("Setting up conda and mamba environments...")
+    if os.path.exists(conda_sh):
+        subprocess.run([f"source {conda_sh}"], shell=True, executable="/bin/bash")
+    if os.path.exists(mamba_sh):
+        subprocess.run([f"source {mamba_sh}"], shell=True, executable="/bin/bash")
     
     # Remove installer to save space
-    os.remove("miniconda.sh")
+    os.remove("Miniforge3.sh")
     
-    print("✅ Miniconda installed successfully!")
-    print("Run '!conda --version' to check if conda is working.")
+    print("✅ Miniforge installed successfully!")
+    print("Run '!mamba --version' to check if mamba is working.")
 
     # Print usage information
     print("\n📋 Usage examples:")
@@ -62,7 +68,7 @@ def install():
 
 def uninstall():
     """
-    Uninstall Miniconda installed by konda.
+    Uninstall Miniforge installed by konda.
     """
     install_path = get_install_path()
     
@@ -70,33 +76,24 @@ def uninstall():
         print(f"❌ Konda installation not found at {install_path}")
         return
     
-    print(f"🗑️ Removing Miniconda installation from {install_path}")
-    # Only remove conda-related directories to avoid damaging the system
-    for item in ["bin/conda", "bin/activate", "bin/deactivate", "etc/profile.d/conda.sh"]:
-        full_path = os.path.join(install_path, item)
-        if os.path.exists(full_path):
-            os.remove(full_path)
-            
-    conda_dirs = ["conda-meta", "conda-bld", "pkgs", "envs"]
-    for item in conda_dirs:
-        full_path = os.path.join(install_path, item)
-        if os.path.exists(full_path):
-            shutil.rmtree(full_path)
+    print(f"🗑️ Removing Miniforge installation from {install_path}")
+    # Remove the entire installation directory since it's in user's home
+    shutil.rmtree(install_path)
             
     print("✅ Konda uninstalled successfully")
 
-def get_conda_path():
+def get_mamba_path():
     """
-    Get the path to the conda executable.
+    Get the path to the mamba executable.
     """
     install_path = get_install_path()
     
-    if is_conda_installed(install_path):
-        return os.path.join(install_path, "bin", "conda")
+    if is_mamba_installed(install_path):
+        return os.path.join(install_path, "bin", "mamba")
     
-    # Check for system-installed conda
-    conda_path = shutil.which("conda")
-    if conda_path:
-        return conda_path
+    # Check for system-installed mamba
+    mamba_path = shutil.which("mamba")
+    if mamba_path:
+        return mamba_path
     
-    raise FileNotFoundError("Conda not found. Please run konda.install() first.")
+    raise FileNotFoundError("Mamba not found. Please run konda.install() first.")
