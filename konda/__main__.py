@@ -1,6 +1,6 @@
 import sys
 from .install import uninstall, install
-from .commands import run_conda_command, print_help
+from .commands import run_mamba_command, print_help
 
 def main():
     """
@@ -22,19 +22,19 @@ def main():
         uninstall()
         return 0
     
-    # Forward all other commands to conda
+    # Forward all other commands to mamba
     try:
-        from .install import is_conda_installed, get_install_path
+        from .install import is_mamba_installed, get_install_path
         
-        # Check if conda is installed
+        # Check if mamba is installed
         install_path = get_install_path()
-        if not is_conda_installed(install_path):
-            print("❌ Conda not found. Installing Miniconda first...")
+        if not is_mamba_installed(install_path):
+            print("❌ Mamba not found. Installing Miniforge first...")
             from .install import install
             install()
         
-        # Run the conda command
-        result = run_conda_command(sys.argv[1:])
+        # Run the mamba command
+        result = run_mamba_command(sys.argv[1:])
         return result.returncode
     
     except Exception as e:

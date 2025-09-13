@@ -11,7 +11,7 @@ setup(
     },
     author="Tam Nguyen",
     author_email="tamnvhustcc@gmail.com",
-    description="A wrapper for conda commands with automatic Miniconda installation",
+    description="A wrapper for mamba commands with automatic Miniforge installation",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/tamnguyenvan/konda",
