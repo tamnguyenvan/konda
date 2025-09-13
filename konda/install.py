@@ -32,9 +32,19 @@ def install():
     """
     install_path = get_install_path()
     
+    # Get system architecture for the download URL
+    system_name = platform.system()
+    machine_arch = platform.machine()
+    
+    # Construct the appropriate download URL
+    if system_name == "Darwin":  # macOS
+        download_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-{machine_arch}.sh"
+    else:  # Linux and others
+        download_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{system_name}-{machine_arch}.sh"
+    
     # Download Miniforge installation script
-    print(f"Downloading Miniforge installer...")
-    subprocess.run(["wget", "-O", "Miniforge3.sh", f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"], shell=True, check=True)
+    print(f"Downloading Miniforge installer for {system_name}-{machine_arch}...")
+    subprocess.run(["wget", "-O", "Miniforge3.sh", download_url], check=True)
     
     # Install Miniforge
     print(f"Installing Miniforge to {install_path}...")
