@@ -25,7 +25,7 @@ There's no learning curve since Konda commands are simply wrappers around mamba 
 ## 📦 Installation
 
 ```bash
-pip install konda
+!pip install konda
 ```
 
 ## 🚀 Quick Start
@@ -33,7 +33,7 @@ pip install konda
 ### 1️⃣ Install Miniforge
 
 ```python
-!import konda
+import konda
 konda.install()
 
 !conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
