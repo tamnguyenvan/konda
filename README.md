@@ -33,30 +33,33 @@ pip install konda
 ### 1️⃣ Install Miniforge
 
 ```python
-import konda
+!import konda
 konda.install()
+
+!conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+!conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
 ```
 
 ### 2️⃣ Use mamba commands with konda
 Konda is a simple wrapper around mamba.
 ```bash
 # Create a new environment
-konda create -n my_env python=3.8 -y
+!konda create -n my_env python=3.8 -y
 
 # Activate the environment
-konda activate my_env
+!konda activate my_env
 
 # Run a command in the environment
-konda run "mamba install anaconda::tensorflow-gpu=2.4.1 -y"
-konda run "pip install requests"
-konda run "mamba install nvidia/label/cuda-12.4.0::cuda-toolkit"
-konda run "pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124"
+!konda run "mamba install anaconda::tensorflow-gpu=2.4.1 -y"
+!konda run "pip install requests"
+!konda run "mamba install nvidia/label/cuda-12.4.0::cuda-toolkit"
+!konda run "pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124"
 
 # Run a script
-konda run "python my_script.py"
+!konda run "python my_script.py"
 
 # Deactivate the environment
-konda deactivate
+!konda deactivate
 ```
 
 ### Example
