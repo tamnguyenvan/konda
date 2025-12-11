@@ -4,6 +4,7 @@ Same quality as premium services, but ~20x cheaper — only $0.001/image!**
 
 [![PyPI version](https://badge.fury.io/py/konda.svg)](https://badge.fury.io/py/konda)
 [![Python Versions](https://img.shields.io/pypi/pyversions/konda.svg)](https://pypi.org/project/konda/)
+[![Downloads](https://img.shields.io/pepy/dt/konda)](https://pepy.tech/project/konda)
 [![CI](https://github.com/tamnguyenvan/konda/actions/workflows/publish.yml/badge.svg)](https://github.com/tamnguyenvan/konda/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
