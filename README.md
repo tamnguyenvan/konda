@@ -1,7 +1,3 @@
-> **🔥 Need background removal for your app? Try my API — RemovebgAPI (https://removebgapi.com).  
-Same quality as premium services, but ~20x cheaper — only $0.001/image!**
-# 🐍 Konda - Mamba Installer/Wrapper for Google Colab 🚀
-
 [![PyPI version](https://badge.fury.io/py/konda.svg)](https://badge.fury.io/py/konda)
 [![Python Versions](https://img.shields.io/pypi/pyversions/konda.svg)](https://pypi.org/project/konda/)
 [![Downloads](https://img.shields.io/pepy/dt/konda)](https://pepy.tech/project/konda)
